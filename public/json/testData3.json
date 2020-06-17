@@ -1,0 +1,41 @@
+{
+    "type": "horizontalBar",
+    "data": {
+        "labels": ["EMDS WEB 1 0 0", "ADS MOBILE APP PAGER 664", "EAO ITUNI IGW APP 1 2 1", "ADS ADSM BKSRV SLT 1 3 5", "ekg inter 1 1 0", "eHS IDEAS2 LITE 1 0 0", "eHR IDEAS2 1 0 11", "CIT MOBILE IOS 0 3 56", "EDONOR 1 0 0", "eHS IDEAS LITE 1 0 0", "eHR IDEAS 1 31 0"],
+        "datasets": [{
+            "label": "# of Votes",
+            "data": ["23", "21", "19", "18", "17", "16", "16", "15", "11", "9", "9"],
+            "backgroundColor": "rgba(255,207,47,0.6)",
+            "borderColor": "rgba(255,207,47,0.6)",
+            "borderWidth": "2",
+			"hoverBorderWidth": "0"
+        }],
+		"options": {
+			"scales": {
+				"yAxes": [{
+					"categoryPercentage": "1.5",
+					"barPercentage": "0.5",
+					"gridLines": {
+						"display":"false"
+					}
+				}],
+				"xAxes": [{
+					"gridLines": {
+						"display":"false"
+					}
+				}]
+			},
+			"elements": {
+				"rectangle": {
+					"borderSkipped": "center"
+				}
+		    },
+			"tooltips": {
+				"enabled": "false"
+		    },
+		    "hover": {
+				 "animationDuration": "0"
+		    }
+		}
+    }
+}

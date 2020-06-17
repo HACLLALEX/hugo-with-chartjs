@@ -1,0 +1,328 @@
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{{ $st := .page }}
+{{ $columns := $st.Params.design.columns | default "2" }}
+{{ $format := $st.Params.design.format | default "1" }}
+<div class="row">
+  {{ if ne $columns "1" }}
+    <div class="col-12 section-heading text-center">
+      {{ with $st.Title }}<h1>{{ . | markdownify | emojify }}</h1>{{ end }}
+      {{ with $st.Params.subtitle }}<p>{{ . | markdownify | emojify }}</p>{{ end }}	  
+	
+	</div>
+
+	{{ if eq $st.Content "" }}
+		<div class="col-12">
+			<!--<canvas id="{{ $st.Params.chart.id}}" width="600" height="400"></canvas>-->
+			<div id="chartInfo" class="chartInfo"></div>
+			
+		</div>
+	{{ else }}
+		{{ if eq $format "1"  }}
+			<div class="col-12 col-lg-6">
+				<!--<canvas id="{{ $st.Params.chart.id}}" width="600" height="400"></canvas>-->
+				<div id="chartInfo" class="chartInfo"></div>
+			</div>
+			<div class="col-12 col-lg-6">
+				{{ $st.Content }}
+			</div>
+		{{ else }}
+			<div class="col-12 col-lg-6">
+				{{ $st.Content }}
+			</div>
+			<div class="col-12 col-lg-6">
+				<!--<canvas id="{{ $st.Params.chart.id}}" width="600" height="400"></canvas>-->
+				<div id="chartInfo" class="chartInfo"></div>
+			</div>
+		{{ end }}
+	{{ end }}
+	
+  {{ else }}
+    <div class="col-12">
+      {{ with $st.Title }}<h1>{{ . | markdownify | emojify }}</h1>{{ end }}
+      {{ with $st.Params.subtitle }}<p>{{ . | markdownify | emojify }}</p>{{ end }}
+	</div>
+	{{ if eq $st.Content "" }}
+		<div class="col-12">
+			<!--<canvas id="{{ $st.Params.chart.id}}" width="600" height="400"></canvas>-->
+			<div id="chartInfo" class="chartInfo"></div>
+		</div>
+	{{ else }}
+		{{ if eq $format "1"  }}
+			<div class="col-12 col-lg-6">
+				<!--<canvas id="{{ $st.Params.chart.id}}" width="600" height="400"></canvas>-->
+				<div id="chartInfo" class="chartInfo"></div>
+			</div>
+			<div class="col-12 col-lg-6">
+				{{ $st.Content }}
+			</div>
+		{{ else }}
+			<div class="col-12 col-lg-6">
+				{{ $st.Content }}
+			</div>
+			<div class="col-12 col-lg-6">
+				<!--<canvas id="{{ $st.Params.chart.id}}" width="600" height="400"></canvas>-->
+				<div id="chartInfo" class="chartInfo"></div>
+			</div>
+		{{ end }}
+	{{ end }}
+  {{ end }}
+</div>
+<script>
+
+console.log("chart ");
+	//console.log({{ $st.Content }});
+	var id = {{ $st.Params.chart.id }};
+	var text = {{ $st.Params.chart.text }};
+	var label = {{$st.Params.chart.chart_label }};
+	var backgroundColor = {{ $st.Params.chart.backgroundColor }};
+	var borderColor = {{ $st.Params.chart.borderColor }};
+	var borderWidth = {{ $st.Params.chart.borderWidth }};
+	var yGridLines = {{ $st.Params.chart.yGridLines }};
+	var xGridLines = {{ $st.Params.chart.xGridLines }};
+	var chartData = {{ $st.Params.chart.data }};
+	var test = {{ $st.Params.chart.id }};
+	var json = {{ $st.Params.chart.json }};
+	var canvasCount = 0;
+	
+	console.log(json);
+	console.log(id);
+	//console.log(label);
+	//console.log(text);
+	//console.log(chartData);
+	//console.log("label: " + label + " backgroundColor: " + backgroundColor + " borderColor: " + borderColor + " borderWidth: " + borderWidth + " yGridLines: " + yGridLines + " xGridLines: " + xGridLines );
+	
+	if(json !=""){
+		$.getJSON(json, function (result) { 
+			console.log("getJson");
+			console.log(result);
+			//canvasCount = $('canvas').length;
+			//console.log("canvasCount: " + canvasCount);
+			var count = $('.chart').length;
+			console.log("count:" + count);
+			var num = 0;
+			if(count == 0){
+				console.log("no .chart");
+				console.log("create a new canvas and add classname '.chart'");
+				var t_canvas = document.createElement("canvas");
+				t_canvas.style.width = "600px";
+				t_canvas.style.height = "400px";
+				t_canvas.setAttribute('class','chart');
+				$(".chartInfo")[0].appendChild(t_canvas);
+				var barChart = new Chart($(".chart")[0], result);
+		
+			} else if((count != 0)){
+				//console.log($('.chart'));
+				console.log("already have .chart");
+				console.log("create a new canvas and add classname '.chart'");
+				
+				var t_canvas = document.createElement("canvas");
+				for(var i=0;i<count;i++){
+					num++;
+					console.log("num: " + num);
+					t_canvas.style.width = "600px";
+					t_canvas.style.height = "400px";
+					t_canvas.setAttribute('class','chart');
+					$(".chartInfo")[num].appendChild(t_canvas);
+				}
+				console.log($(".chartInfo")[num]);
+				var barChart = new Chart($(".chart")[num], result);
+			}
+		})
+		.fail(function (jqxhr, status, error) { 
+			console.log('alert', status, error) }
+		);
+	} else {
+		console.log("empty");
+		console.log("create a empty canvas and add class name");
+		//var t_canvas = document.createElement("canvas");
+		//t_canvas.setAttribute('class','chart');
+		//$(".chartInfo")[0].appendChild(t_canvas);
+	}
+
+	/*
+	//the other choice
+	canvasCount = $('canvas').length;
+	console.log(canvasCount);
+	var num = 0;
+	if(canvasCount == 0){
+		var t_canvas = document.createElement("canvas");
+		t_canvas.style.width = "600px";
+		t_canvas.style.height = "400px";
+		$(".chartInfo")[canvasCount].appendChild(t_canvas);
+		var chars = chartData.split(',');
+		console.log(chars);
+		
+		var myMap = new Map();
+	
+		for(var i=0;i<chars.length;i++){
+			var char = chars[i].split(':');
+			console.log(char);
+			for(var j=0;j<char.length;j++){
+				myMap.set(char[0],char[1])
+			}
+		}
+		
+		const mapSort1 = new Map([...myMap.entries()].sort((a, b) => b[1] - a[1]));
+		console.log(mapSort1);
+		
+		var t_arr1 =[];
+		var t_arr2 = [];
+		
+		for(var [key,value] of mapSort1){
+			//console.log(key + "," + value);
+			t_arr1.push(key);
+			t_arr2.push(value);
+		}
+		console.log(t_arr1);
+		console.log(t_arr2);
+		
+		var chartData = {
+		  label: label,
+		  data: t_arr2,
+		  backgroundColor: backgroundColor,
+		  borderColor: borderColor,
+		  borderWidth: 2,
+		  hoverBorderWidth: 0
+		};
+
+		var chartOptions = {
+		  scales: {
+			yAxes: [{
+			  categoryPercentage: 1.5,
+			  barPercentage: 0.5,
+			  gridLines: {
+				display:false
+			  }
+			}],
+			xAxes: [{
+			  gridLines: {
+				display:false
+			  }
+			}],
+		  },
+		  elements: {
+			rectangle: {
+			  borderSkipped: 'center',
+			}
+		  },
+		  tooltips: {
+			enabled: false
+		  },
+		  hover: {
+			  animationDuration: 0
+		  },
+		  plugins: {
+			datalabels: {
+				color: 'rgb(0,0,0)',
+				anchor: 'end',
+				align: 'end'				
+			}
+		  }
+		};
+		
+		var barChart = new Chart(t_canvas, {
+		  type: 'horizontalBar',
+		  data: {
+			labels: t_arr1,
+			datasets: [chartData],
+		  },
+		  options: chartOptions
+		});
+
+	} else if((canvasCount != 0)){
+		
+		var t_canvas = document.createElement("canvas");
+		for(var i=0;i<canvasCount;i++){
+			num++;
+			t_canvas.style.width = "600px";
+			t_canvas.style.height = "400px";
+			$(".chartInfo")[num].appendChild(t_canvas);
+			console.log("num: " + num);
+		}
+		var chars = chartData.split(',');
+		console.log(chars);
+		
+		var myMap = new Map();
+	
+		for(var i=0;i<chars.length;i++){
+			var char = chars[i].split(':');
+			console.log(char);
+			for(var j=0;j<char.length;j++){
+				myMap.set(char[0],char[1])
+			}
+		}
+		
+		const mapSort1 = new Map([...myMap.entries()].sort((a, b) => b[1] - a[1]));
+		console.log(mapSort1);
+		
+		var t_arr1 =[];
+		var t_arr2 = [];
+		
+		for(var [key,value] of mapSort1){
+			//console.log(key + "," + value);
+			t_arr1.push(key);
+			t_arr2.push(value);
+		}
+		console.log(t_arr1);
+		console.log(t_arr2);
+		
+		var chartData = {
+		  label: label,
+		  data: t_arr2,
+		  backgroundColor: backgroundColor,
+		  borderColor: borderColor,
+		  borderWidth: 2,
+		  hoverBorderWidth: 0
+		};
+
+		var chartOptions = {
+		  scales: {
+			yAxes: [{
+			  categoryPercentage: 1.5,
+			  barPercentage: 0.5,
+			  gridLines: {
+				display:false
+			  }
+			}],
+			xAxes: [{
+			  gridLines: {
+				display:false
+			  }
+			}],
+		  },
+		  elements: {
+			rectangle: {
+			  borderSkipped: 'center',
+			}
+		  },
+		  tooltips: {
+			enabled: false
+		  },
+		  hover: {
+			  animationDuration: 0
+		  },
+		  plugins: {
+			datalabels: {
+				color: 'rgb(0,0,0)',
+				anchor: 'end',
+				align: 'end'				
+			}
+		  }
+		};
+		
+		var barChart = new Chart(t_canvas, {
+		  type: 'horizontalBar',
+		  data: {
+			labels: t_arr1,
+			datasets: [chartData],
+		  },
+		  options: chartOptions
+		});
+		
+	}
+	*/
+		
+</script>

@@ -1,0 +1,19 @@
+<div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<canvas id="{{ .Get "id"}}" width="{{ .Get "width" }}" height="{{ .Get "height" }}"></canvas>
+
+	{{ if .Get "js" }}
+    <script src="{{ .Get "js"}}"></script>
+    <script>
+		var js = {{ .Get "js"}};
+		var json = {{ .Get "json"}};
+		var id = {{ .Get "id"}};
+		<!--console.log("tag test: " + test + " js : " + js);-->
+		<!--console.log(id);-->
+		console.log(json);
+		chart(id,json);
+	</script>
+    {{ end }}
+</div>
