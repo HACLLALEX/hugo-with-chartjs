@@ -1,0 +1,90 @@
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{{ $st := .page }}
+{{ $columns := $st.Params.design.columns | default "2" }}
+{{ $format := $st.Params.design.format | default "1" }}
+<div class="row">
+  {{ if ne $columns "1" }}
+    <div class="col-12 section-heading text-center">
+      {{ with $st.Title }}<h1>{{ . | markdownify | emojify }}</h1>{{ end }}
+      {{ with $st.Params.subtitle }}<p>{{ . | markdownify | emojify }}</p>{{ end }}	  
+	
+	</div>
+
+	{{ if eq $st.Content "" }}
+		<div class="col-12">
+			<!--<canvas id="{{ $st.Params.chart.id}}" width="600" height="400"></canvas>-->
+			<div id="{{ $st.Params.chart.id }}"></div>
+			
+		</div>
+	{{ else }}
+		{{ if eq $format "1"  }}
+			<div class="col-12 col-lg-6">
+				<!--<canvas id="{{ $st.Params.chart.id}}" width="600" height="400"></canvas>-->
+				<div id="{{ $st.Params.chart.id }}"></div>
+			</div>
+			<div class="col-12 col-lg-6">
+				{{ $st.Content }}
+			</div>
+		{{ else }}
+			<div class="col-12 col-lg-6">
+				{{ $st.Content }}
+			</div>
+			<div class="col-12 col-lg-6">
+				<!--<canvas id="{{ $st.Params.chart.id}}" width="600" height="400"></canvas>-->
+				<canvas id="{{ $st.Params.chart.id}}"></canvas>
+			</div>
+		{{ end }}
+	{{ end }}
+	
+  {{ else }}
+    <div class="col-12">
+      {{ with $st.Title }}<h1>{{ . | markdownify | emojify }}</h1>{{ end }}
+      {{ with $st.Params.subtitle }}<p>{{ . | markdownify | emojify }}</p>{{ end }}
+	</div>
+	{{ if eq $st.Content "" }}
+		<div class="col-12">
+			<!--<canvas id="{{ $st.Params.chart.id}}" width="600" height="400"></canvas>-->
+			<div id="{{ $st.Params.chart.id }}" ></div>
+		</div>
+	{{ else }}
+		{{ if eq $format "1"  }}
+			<div class="col-12 col-lg-6">
+				<!--<canvas id="{{ $st.Params.chart.id}}" width="600" height="400"></canvas>-->
+				<div id="{{ $st.Params.chart.id }}" ></div>
+			</div>
+			<div class="col-12 col-lg-6">
+				{{ $st.Content }}
+			</div>
+		{{ else }}
+			<div class="col-12 col-lg-6">
+				{{ $st.Content }}
+			</div>
+			<div class="col-12 col-lg-6">
+				<!--<canvas id="{{ $st.Params.chart.id}}" width="600" height="400"></canvas>-->
+				<div id="{{ $st.Params.chart.id }}" ></div>
+				
+			</div>
+		{{ end }}
+	{{ end }}
+  {{ end }}
+</div>
+<script>
+	var json = {{ $st.Params.chart.json }};
+	var id = {{ $st.Params.chart.id }};
+	if(id){
+		console.log("true");
+		$.getJSON(json, function (result) { 
+			var chartId = $("#{{ $st.Params.chart.id }}");
+			var barChart = new Chart(chartId, result);
+		})
+		.fail(function (jqxhr, status, error) { 
+			console.log('alert', status, error) 
+		});		
+
+	}else{
+		console.log("false");
+	}		
+</script>
