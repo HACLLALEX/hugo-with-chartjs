@@ -44,22 +44,10 @@ subtitle = ""
  # CSS class.
  css_class = ""
  
- [chart]
- #2 Style for generate chart
- 
+ [chart] 
  #Using JSON to generate a chart
+ id = "myChart2"
  json="../json/testData4.json"
  
- #Using tag to generate a chart
- id = "myChart321"
- chart_label = "Source Rank"
- backgroundColor = "rgba(255,207,47,0.6)"
- borderColor = "rgba(255,207,47)"
- borderWidth = "2"
- yGridLines = "false"
- xGridLines = "false"
- type = ""
- data = "EMDS WEB 1 0 0:23,ekg inter 1 1 0:17,eHS IDEAS LITE 1 0 0:9,eHS IDEAS2 LITE 1 0 0:16,eHR IDEAS2 1 0 11:16,eHR IDEAS 1 31 0:9,EDONOR 1 0 0:11,EAO ITUNI IGW APP 1 2 1:19,CIT MOBILE IOS 0 3 56:15,ADS MOBILE APP PAGER 664:21,ADS ADSM BKSRV SLT 1 3 5:18"
-
 +++
-test123
+test2

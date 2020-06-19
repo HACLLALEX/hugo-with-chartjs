@@ -1,18 +1,17 @@
 +++
-# A section created with the Blank widget.
-widget = "chart"  # See https://sourcethemes.com/academic/docs/page-builder/
+# A section created with the Chart widget.
+widget = "blank"  # See https://sourcethemes.com/academic/docs/page-builder/
 headless = true  # This file represents a page section.
 active = true  # Activate this widget? true/false
-weight = 22  # Order that this section will appear.
+weight = 1  # Order that this section will appear.
 
 # Note: a full width section format can be enabled by commenting out the `title` and `subtitle` with a `#`.
-title = "Chart3"
+title = "shortcode test"
 subtitle = ""
-
 [design]
   # Choose how many columns the section has. Valid values: 1 or 2.
-   columns = "2"
-  format = "2" 
+  columns = "2"
+
 [design.background]
   # Apply a background color, gradient, or image.
   #   Uncomment (by removing `#`) an option to apply it.
@@ -43,12 +42,6 @@ subtitle = ""
  
  # CSS class.
  css_class = ""
- 
- [chart]
- #Using JSON to generate a chart
- id = "myChart3"
- json="../json/testData5.json"
-
 +++
-test3
 
+{{< chart id="test1" json="../json/testData3.json" >}}
